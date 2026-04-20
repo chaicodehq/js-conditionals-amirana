@@ -28,15 +28,24 @@
 export function calculateTax(income) {
   // Your code here
 
-  if (income >= 0 && income <= 10000) {
-    return income * 0;
-  } else if (income >= 10001 && income <= 30000) {
-    return (income - 10000 )* 0.10;
-  } else if (income >= 30001 && income <= 70000) {
-    return (income - 20000) * 0.20
-  } else if (income > 70000) {
-    return 2000 + 8000 + (income - 70000) * 0.30
+  if (income <= 0) return 0;
+
+  const bracket1 = income <= 10000;
+  const bracket2 = income >= 10000 && income <= 30000;
+  const bracket3 = income >= 30000 && income <= 70000;
+  const bracket4 = income >= 70000;
+
+  let tax;
+
+  if (bracket1) {
+    tax = 0;
+  } else if (bracket2) {
+    tax = (income - 10000) * 0.10;
+  } else if (bracket3) {
+    tax = 2000 + ((income - 30000) * 0.20);
   } else {
-    return 0;
-  } 
+    tax = 2000 + 8000 + ((income - 70000) * 0.30);
+  }
+
+  return tax;
 }

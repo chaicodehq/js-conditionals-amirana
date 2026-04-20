@@ -31,35 +31,36 @@
 export function calculateShipping(weight, country, orderTotal) {
   // Your code here
 
-  if (weight <= 0 || orderTotal < 0) {
-    return -1;
-  }
+  if (weight <= 0) return -1;
+  if (orderTotal < 0) return -1;
+
+  let shipping;
 
   if (country === "US") {
-    if (orderTotal > 50) {
-      return 0;
+    if (weight <= 1) {
+      shipping = 5;
+    } else if (weight <= 5) {
+      shipping = 10;
     } else {
-      if (weight > 0 && weight <= 1) {
-        return 5;
-      } else if (weight <= 5) {
-        return 10;
-      } else if (weight > 5) {
-        return 15;
-      }
+      shipping = 15;
+    }
+
+    if (orderTotal > 50) {
+      shipping = 0;
     }
   } else {
-    if (orderTotal > 100) {
-      return 0;
+    if (weight <= 1) {
+      shipping = 15;
+    } else if (weight <= 5) {
+      shipping = 25;
     } else {
-      if (weight > 0 && weight <= 1) {
-        return 15;
-      } else if (weight <= 5) {
-        return 25;
-      } else if (weight > 5) {
-        return 40;
-      }
+      shipping = 40;
+    }
+
+    if (orderTotal > 100) {
+      shipping = 0;
     }
   }
 
-  return -1;
+  return shipping;
 }
